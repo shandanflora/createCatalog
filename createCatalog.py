@@ -121,7 +121,7 @@ def write_excel(file, dict_result):
     sheet_names = list(dict_result.keys())
     row_count = len(sheet_names)
     col_width(sheet, row_count)
-    write_head(sheet, style, font)
+    write_head(sheet, style, font)  # write sheet head
     # data
     font.height = 12 * 20
     font.bold = 0
