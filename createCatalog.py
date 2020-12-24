@@ -6,13 +6,19 @@ import Count
 def read_excel(file):
     book = xlrd.open_workbook(file)
     dict_count = {}
+    col = 0
     for sheet in book.sheets():
-        count = Count.CountCase()
-        count.finish_pass = sheet.col_values(sheet.ncols - 1, 1).count('PASS')
-        count.finish_fail = sheet.col_values(sheet.ncols - 1, 1).count('FAIL')
-        count.unfinished = sheet.col_values(sheet.ncols - 1, 1).count('')
-        count.total = count.finish_fail + count.finish_pass + count.unfinished
         if sheet.name.find('对照表') == -1:
+            for i in range(1, sheet.ncols):
+                if sheet.cell(1, i).value == "测试结果":
+                    col = i
+                    break
+            count = Count.CountCase()
+            count.finish_pass = sheet.col_values(col, 1).count('PASS')
+            count.finish_fail = sheet.col_values(col, 1).count('FAIL')
+            count.unfinished = sheet.col_values(col, 1).count('')
+            count.total = count.finish_fail + count.finish_pass + count.unfinished
+            # update dictionary
             item = {sheet.name: count}
             dict_count.update(item)
     return dict_count
@@ -138,4 +144,4 @@ def write_excel(file, dict_result):
 
 
 if __name__ == '__main__':
-    write_excel('123.xlsx', read_excel('/Users/user-b016/Desktop/111/拖地机器人测试用例.xlsx'))
+    write_excel('123.xlsx', read_excel('/Users/user-b016/Desktop/111/拖地机器人测试用例 (1).xlsx'))
