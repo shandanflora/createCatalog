@@ -1,0 +1,4 @@
+pyinstaller -p /Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/site-packages/xlwt -F /Users/user-b016/lily.shan/Python/CreateCatalog/createCatalog.py --clean
+
+
+createCatalog --file "123.xlsx" --filepath "/Users/user-b016/Desktop/111/拖地机器人测试用例(12.30-1.8).xlsx"
