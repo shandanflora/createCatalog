@@ -9,12 +9,21 @@ class main_window(QMainWindow):
     # constructor
     def __init__(self, name='Dlg'):
         super().__init__()
+        self.label = QLabel()
+        self.progressBar = QProgressBar()
         self.ui = Ui_MainWindow()
         self.initUI(name)
 
     # init function
     def initUI(self, name):
         self.ui.setupUi(self)
+        self.label.setText("正在生成：")
+        self.statusBar().addPermanentWidget(self.label)
+        self.statusBar().addPermanentWidget(self.progressBar)
+        # This is simply to show the bar
+        self.progressBar.setGeometry(0, 0, 100, 5)
+        self.progressBar.setRange(0, 100)  # 设置进度条的范围
+        self.progressBar.setValue(0)
         self.setWindowTitle(name)
         self.initConnect()
 
@@ -32,6 +41,7 @@ class main_window(QMainWindow):
     def obj_btn_clicked(self):
         file_name = QFileDialog.getExistingDirectory(self.ui.centralwidget, 'open folder', '/')
         self.ui.edit_obj.setText(file_name)
+        # reset style sheet
         self.ui.statusbar.setStyleSheet("0;")
         self.ui.statusbar.setStyleSheet("font-size:15pt;")
         if file_name != "":
