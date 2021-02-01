@@ -23,18 +23,48 @@
   </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QGridLayout" name="gridLayout">
-    <item row="0" column="1">
-     <widget class="QLineEdit" name="edit_src"/>
-    </item>
-    <item row="3" column="0">
-     <widget class="QPushButton" name="gen_btn">
+    <item row="1" column="2">
+     <widget class="QPushButton" name="obj_file_btn">
       <property name="font">
        <font>
         <pointsize>15</pointsize>
        </font>
       </property>
       <property name="text">
-       <string>生成</string>
+       <string>选择</string>
+      </property>
+     </widget>
+    </item>
+    <item row="4" column="1" alignment="Qt::AlignLeft|Qt::AlignVCenter">
+     <widget class="QPushButton" name="clear_btn">
+      <property name="font">
+       <font>
+        <pointsize>15</pointsize>
+       </font>
+      </property>
+      <property name="text">
+       <string>清空</string>
+      </property>
+     </widget>
+    </item>
+    <item row="2" column="1">
+     <widget class="QLineEdit" name="edit_file_name"/>
+    </item>
+    <item row="0" column="1">
+     <widget class="QLineEdit" name="edit_src"/>
+    </item>
+    <item row="1" column="1">
+     <widget class="QLineEdit" name="edit_obj"/>
+    </item>
+    <item row="2" column="0">
+     <widget class="QLabel" name="label_3">
+      <property name="font">
+       <font>
+        <pointsize>15</pointsize>
+       </font>
+      </property>
+      <property name="text">
+       <string>文件名：</string>
       </property>
      </widget>
     </item>
@@ -50,18 +80,6 @@
       </property>
      </widget>
     </item>
-    <item row="3" column="1" alignment="Qt::AlignLeft|Qt::AlignVCenter">
-     <widget class="QPushButton" name="clear_btn">
-      <property name="font">
-       <font>
-        <pointsize>15</pointsize>
-       </font>
-      </property>
-      <property name="text">
-       <string>清空</string>
-      </property>
-     </widget>
-    </item>
     <item row="0" column="0">
      <widget class="QLabel" name="label">
       <property name="font">
@@ -74,36 +92,6 @@
       </property>
      </widget>
     </item>
-    <item row="1" column="1">
-     <widget class="QLineEdit" name="edit_obj"/>
-    </item>
-    <item row="1" column="2">
-     <widget class="QPushButton" name="obj_file_btn">
-      <property name="font">
-       <font>
-        <pointsize>15</pointsize>
-       </font>
-      </property>
-      <property name="text">
-       <string>选择</string>
-      </property>
-     </widget>
-    </item>
-    <item row="2" column="1">
-     <widget class="QLineEdit" name="edit_file_name"/>
-    </item>
-    <item row="2" column="0">
-     <widget class="QLabel" name="label_3">
-      <property name="font">
-       <font>
-        <pointsize>15</pointsize>
-       </font>
-      </property>
-      <property name="text">
-       <string>文件名：</string>
-      </property>
-     </widget>
-    </item>
     <item row="0" column="2">
      <widget class="QPushButton" name="src_file_btn">
       <property name="font">
@@ -113,6 +101,18 @@
       </property>
       <property name="text">
        <string>选择</string>
+      </property>
+     </widget>
+    </item>
+    <item row="4" column="0">
+     <widget class="QPushButton" name="gen_btn">
+      <property name="font">
+       <font>
+        <pointsize>15</pointsize>
+       </font>
+      </property>
+      <property name="text">
+       <string>生成</string>
       </property>
      </widget>
     </item>
