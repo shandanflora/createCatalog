@@ -1,20 +1,31 @@
 import xlrd
 import xlwt
+
 import Count
-import argparse
-import os
 
 
 class create_catalog(object):
+    __bar_value = 3
+
     def __init__(self):
         pass
 
+    @classmethod
+    def get_value(cls):
+        return cls.__bar_value
+
+    @classmethod
+    def set_value(cls, num):
+        cls.__bar_value = num
+
     @staticmethod
-    def read_excel(file):
+    def read_excel(file, signal):
         book = xlrd.open_workbook(file)
         dict_count = {}
         col = 0
+        i = 1
         for sheet in book.sheets():
+            # count except named '对照表'
             if sheet.name.find('对照表') == -1:
                 for i in range(1, sheet.ncols):
                     if sheet.cell(1, i).value == "测试结果":
@@ -28,6 +39,10 @@ class create_catalog(object):
                 # update dictionary
                 item = {sheet.name: count}
                 dict_count.update(item)
+                value = create_catalog.get_value() + 3 * i
+                create_catalog.set_value(value)
+                signal.emit(create_catalog.get_value())
+                i += 1
         return dict_count
 
     @staticmethod
@@ -122,7 +137,11 @@ class create_catalog(object):
         sheet.write(row_count + 3, 6, total_day, style)
 
     @staticmethod
-    def write_excel(file, dict_result):
+    def write_excel(dict_para, signal):
+        signal.emit(create_catalog.get_value())
+        file = dict_para['obj_file']
+        dict_result = create_catalog.read_excel(dict_para['src_file'], signal)
+        signal.emit(50)
         book = xlwt.Workbook(encoding='utf-8')
         sheet = book.add_sheet('Count')
         style = xlwt.XFStyle()  # 初始化样式
@@ -149,13 +168,3 @@ class create_catalog(object):
         book.save(file)
         print('write excel successfully!!!')
 
-
-if __name__ == '__main__':
-    parser = argparse.ArgumentParser(description='manual to this script')
-    parser.add_argument('--file', type=str, default="")
-    parser.add_argument('--filepath', type=str, default="")
-    args = parser.parse_args()
-    file_path = os.getcwd() + "/" + args.file
-    print(file_path)
-    print(args.filepath)
-    create_catalog.write_excel('123.xlsx', create_catalog.read_excel('/Users/user-b016/Desktop/111/拖地机器人测试用例.xlsx'))
