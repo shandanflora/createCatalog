@@ -14,6 +14,8 @@ class WorkThread(QThread):
         self.dict = dict_para
 
     def run(self):
+        # now_time = datetime.datetime.now()
+        # print('2. %s' % now_time)
         create_catalog.write_excel(self.dict, self.signal_bar)
         self.signal_info.emit()
         pass
@@ -63,6 +65,7 @@ class main_window(QMainWindow):
             self.ui.statusbar.showMessage("已选择目标路径")
 
     def src_btn_clicked(self):
+        self.progressBar.setValue(0)
         file_name = QFileDialog.getOpenFileName(self.ui.centralwidget, 'open file', '/')
         self.ui.edit_src.setText(file_name[0])
         namelist = file_name[0].split('/')
@@ -75,6 +78,7 @@ class main_window(QMainWindow):
             self.ui.statusbar.showMessage("已选择源文件")
 
     def gen_btn_clicked(self):
+        self.progressBar.setValue(0)
         if self.ui.edit_src.text() == "":
             self.ui.statusbar.setStyleSheet("font-size:15pt;""background-color:#FF0000;")
             self.ui.statusbar.showMessage("源文件不能为空！！！")
@@ -89,6 +93,7 @@ class main_window(QMainWindow):
             src_file = self.ui.edit_src.text()
             dict_para = {'src_file': src_file, 'obj_file': obj_file,
                          'bar': self.progressBar, 'label': self.label}
+
             self.label.setText("正在生成:")
             self.thread = WorkThread(dict_para)
             self.thread.signal_info.connect(self.update_info)
@@ -111,3 +116,4 @@ class main_window(QMainWindow):
         self.ui.edit_src.setText("")
         self.ui.edit_obj.setText("")
         self.ui.edit_file_name.setText("")
+        self.progressBar.setValue(0)

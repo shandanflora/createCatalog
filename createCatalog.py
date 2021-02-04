@@ -2,6 +2,7 @@ import xlrd
 import xlwt
 
 import Count
+# import datetime
 
 
 class create_catalog(object):
@@ -20,13 +21,20 @@ class create_catalog(object):
 
     @staticmethod
     def read_excel(file, signal):
+        signal.emit(8)
         book = xlrd.open_workbook(file)
+        signal.emit(10)
         dict_count = {}
         col = 0
-        i = 1
+        j = 1
         for sheet in book.sheets():
             # count except named '对照表'
             if sheet.name.find('对照表') == -1:
+                # value = 3 * j
+                # print("j = %s, value = %s" % (j, value))
+                # create_catalog.set_value(value)
+                # signal.emit(create_catalog.get_value())
+
                 for i in range(1, sheet.ncols):
                     if sheet.cell(1, i).value == "测试结果":
                         col = i
@@ -39,10 +47,7 @@ class create_catalog(object):
                 # update dictionary
                 item = {sheet.name: count}
                 dict_count.update(item)
-                value = create_catalog.get_value() + 3 * i
-                create_catalog.set_value(value)
-                signal.emit(create_catalog.get_value())
-                i += 1
+                j += 1
         return dict_count
 
     @staticmethod
@@ -141,7 +146,7 @@ class create_catalog(object):
         signal.emit(create_catalog.get_value())
         file = dict_para['obj_file']
         dict_result = create_catalog.read_excel(dict_para['src_file'], signal)
-        signal.emit(50)
+        signal.emit(15)
         book = xlwt.Workbook(encoding='utf-8')
         sheet = book.add_sheet('Count')
         style = xlwt.XFStyle()  # 初始化样式
@@ -150,21 +155,27 @@ class create_catalog(object):
         font.height = 15 * 20
         create_catalog.format_cell(style, font)
         create_catalog.draw_border(style)
+        signal.emit(20)
         sheet_names = list(dict_result.keys())
         row_count = len(sheet_names)
         create_catalog.col_width(sheet, row_count)
+        signal.emit(25)
         create_catalog.write_head(sheet, style, font)  # write sheet head
+        signal.emit(30)
         # data
         font.height = 12 * 20
         font.bold = 0
         style.font = font  # 设定样式
-
+        signal.emit(40)
         create_catalog.write_data(sheet_names, dict_result, style, sheet, row_count)
+        signal.emit(65)
 
         sheet.set_panes_frozen(True)
         sheet.set_horz_split_pos(1)
         sheet.set_horz_split_pos(2)
         sheet.set_horz_split_pos(3)
         book.save(file)
+        signal.emit(90)
+        create_catalog.set_value(0)
         print('write excel successfully!!!')
 
